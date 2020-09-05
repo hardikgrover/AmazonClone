@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.amazon">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Home2Activity"
+            android:label="@string/title_activity_home2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Home1Activity"
+            android:label="@string/title_activity_home1"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Hardik" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CodeMail"
+            android:label="@string/title_activity_code_mail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdminCategoryActivity" />
+        <activity android:name=".AdminAddNewProductActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".loginActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
