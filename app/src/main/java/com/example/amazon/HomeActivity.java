@@ -31,15 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private DatabaseReference productRef;
-    private RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        productRef = FirebaseDatabase.getInstance().getReference().child("Products");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -61,9 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-//        recyclerView.setHasFixedSize(true);
-//        layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
+
     }
 
     @Override
@@ -80,36 +75,7 @@ public class HomeActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        FirebaseRecyclerOptions<Products>options =
-//                new FirebaseRecyclerOptions.Builder<Products>()
-//                .setQuery(productRef,Products.class)
-//                .build();
-//        FirebaseRecyclerAdapter<Products, ProductVeiwHolder> adapter = new
-//                FirebaseRecyclerAdapter<Products, ProductVeiwHolder>(options) {
-//                    @Override
-//                    protected void onBindViewHolder(@NonNull ProductVeiwHolder productVeiwHolder, int i, @NonNull Products products) {
-//                        productVeiwHolder.productName.setText(products.getPname());
-//                        productVeiwHolder.productDescription.setText(products.getPname());
-//                        productVeiwHolder.productPrice.setText("Price = " + products.getPname() + "$");
-//                        Picasso .get().load(products.getImage()).into(productVeiwHolder.imageView);
-//                    }
-//
-//                    @NonNull
-//                    @Override
-//                    public ProductVeiwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_items_layout,parent,false);
-//                            ProductVeiwHolder holder  = new ProductVeiwHolder(view);
-//                            return holder;
-//                            }
-//                };
-//        recyclerView.setAdapter(adapter);
-//        adapter.startListening();
 
-
-    }
 }
 
 
