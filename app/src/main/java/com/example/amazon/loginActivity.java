@@ -16,6 +16,10 @@ import android.widget.Toast;
 
 import com.example.amazon.Model.users;
 import com.example.amazon.Prevalent.prevalent;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +35,7 @@ public class loginActivity extends AppCompatActivity {
     private String parentDbName = "users";
     private CheckBox checkBoxRememberMe;
     private TextView adminLink , notAdminLink;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class loginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
 
         checkBoxRememberMe = findViewById(R.id.remember_me_check);
         Paper.init(this);
@@ -74,11 +81,11 @@ public class loginActivity extends AppCompatActivity {
 
     private void loginUser() {
         String password = inputPassword.getText().toString();
-        String phone = phoneNumber.getText().toString();
+        String email = phoneNumber.getText().toString();
           if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "please enter password", Toast.LENGTH_SHORT).show();
         }
-        else  if (TextUtils.isEmpty(phone)){
+        else  if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "please enter your phone number", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -86,56 +93,78 @@ public class loginActivity extends AppCompatActivity {
             loadingBar.setMessage("Please wait while checking the crediantials");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+               if (task.isSuccessful()){
+                   if (parentDbName.equals("users")){
+                       Intent intent = new Intent(loginActivity.this,HomeActivity.class);
+                               startActivity(intent);
+                   }
+                   else if (parentDbName.equals("admins")){
+                       Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
+                              startActivity(intent);
+                   }
 
-            allowAccessToAccount(phone,password);
+               }
+               else {
+                   String message = task.getException().toString();
+                   Toast.makeText(loginActivity.this,"error"+message,Toast.LENGTH_SHORT).show();
+                   loadingBar.dismiss();
+               }
+                }
+            });
+
+
+
+
         }
 
     }
 
-    private void allowAccessToAccount(final String phone, final String password) {
-        if(checkBoxRememberMe.isChecked()){
-            Paper.book().write(prevalent.phoneKey,phone);
-            Paper.book().write(prevalent.passwordKey,password);
-        }
+    private void allowAccessToAccount() {
+//        if(checkBoxRememberMe.isChecked()){
+//            Paper.book().write(prevalent.phoneKey,phone);
+//            Paper.book().write(prevalent.passwordKey,password);
+//        }
         final DatabaseReference rootRef;
         rootRef = FirebaseDatabase.getInstance().getReference();
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(parentDbName).child(phone).exists()){
-                    users userData = dataSnapshot.child(parentDbName).child(phone).getValue(users.class);
+//                if (dataSnapshot.child(parentDbName).child(phone).exists()){
+//                    users userData = dataSnapshot.child(parentDbName).child(phone).getValue(users.class);
+//
+//                    if(userData.getPhone().equals(phone)){
+//                        if(userData.getPassword().equals(password)){
+//                           if(parentDbName.equals("admins")){
+//                               Toast.makeText(loginActivity.this, "Welcome admin you are Logged in successfully", Toast.LENGTH_SHORT).show();
+//                               loadingBar.dismiss();
+//                               Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
+//                               startActivity(intent);
+//                           }
+//                           else if(parentDbName.equals("users")){
+//                               Toast.makeText(loginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+//                               loadingBar.dismiss();
+////                               Intent intent = new Intent(loginActivity.this,HomeActivity.class);
+////                               startActivity(intent);
+//                       //    }
+//
+//                        }
+//                        else
+//                        {
+//                            Toast.makeText(loginActivity.this, "Password is incorrect!", Toast.LENGTH_SHORT).show();
+//                            loadingBar.dismiss();
+//                        }
+//                    }
 
-                    if(userData.getPhone().equals(phone)){
-                        if(userData.getPassword().equals(password)){
-                           if(parentDbName.equals("admins")){
-                               Toast.makeText(loginActivity.this, "Welcome admin you are Logged in successfully", Toast.LENGTH_SHORT).show();
-                               loadingBar.dismiss();
-                               Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
-                               startActivity(intent);
-                           }
-                           else if(parentDbName.equals("users")){
-                               Toast.makeText(loginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                               loadingBar.dismiss();
-                               Intent intent = new Intent(loginActivity.this,HomeActivity.class);
-                               startActivity(intent);
-                           }
 
-                        }
-                        else
-                        {
-                            Toast.makeText(loginActivity.this, "Password is incorrect!", Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-                        }
-                    }
-
-
-
-                }
-                else{
-
-                    Toast.makeText(loginActivity.this, "Account with this "+ phone +" does not exist", Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
-                }
+               // }
+//                else{
+//
+//                    Toast.makeText(loginActivity.this, "Account with this "+ phone +" does not exist", Toast.LENGTH_SHORT).show();
+//                        loadingBar.dismiss();
+//                }
             }
 
             @Override

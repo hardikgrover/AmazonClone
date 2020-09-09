@@ -48,18 +48,18 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
-        String userPhoneKey = Paper.book().read(prevalent.phoneKey);
-        String userPassword = Paper.book().read(prevalent.passwordKey);
-    if (userPhoneKey != "" && userPassword!= ""){
-        if(!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPassword)){
-            allowAccess(userPhoneKey,userPassword);
-            loadingBar.setTitle("Already logged in");
-            loadingBar.setMessage("Please wait.....");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
-        }
+//        String userPhoneKey = Paper.book().read(prevalent.phoneKey);
+//        String userPassword = Paper.book().read(prevalent.passwordKey);
+//    if (userPhoneKey != "" && userPassword!= ""){
+//        if(!TextUtils.isEmpty(userPhoneKey) && !TextUtils.isEmpty(userPassword)){
+//            allowAccess(userPhoneKey,userPassword);
+//            loadingBar.setTitle("Already logged in");
+//            loadingBar.setMessage("Please wait.....");
+//            loadingBar.setCanceledOnTouchOutside(false);
+//            loadingBar.show();
+//        }
 
-    }
+    //}
     }
 
     private void allowAccess(final String phone, final String password) {
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
                             Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+
                             startActivity(intent);
 
                         }
