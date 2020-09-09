@@ -81,6 +81,11 @@ public class loginActivity extends AppCompatActivity {
         else  if (TextUtils.isEmpty(phone)){
             Toast.makeText(this, "please enter your phone number", Toast.LENGTH_SHORT).show();
         }
+         if(parentDbName.equals("admins")){
+              Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
+                               startActivity(intent);
+
+          }
         else{
             loadingBar.setTitle("Logging in");
             loadingBar.setMessage("Please wait while checking the crediantials");
@@ -107,13 +112,13 @@ public class loginActivity extends AppCompatActivity {
 
                     if(userData.getPhone().equals(phone)){
                         if(userData.getPassword().equals(password)){
-                           if(parentDbName.equals("admins")){
-                               Toast.makeText(loginActivity.this, "Welcome admin you are Logged in successfully", Toast.LENGTH_SHORT).show();
-                               loadingBar.dismiss();
-                               Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
-                               startActivity(intent);
-                           }
-                           else if(parentDbName.equals("users")){
+//                           if(parentDbName.equals("admins")){
+//                               Toast.makeText(loginActivity.this, "Welcome admin you are Logged in successfully", Toast.LENGTH_SHORT).show();
+//                               loadingBar.dismiss();
+//                               Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
+//                               startActivity(intent);
+                           //}
+                            if(parentDbName.equals("users")){
                                Toast.makeText(loginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                                loadingBar.dismiss();
                                Intent intent = new Intent(loginActivity.this,HomeActivity.class);
