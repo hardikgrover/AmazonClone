@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/product_name"
+            android:id="@+id/product_home_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -23,7 +23,7 @@
             android:id="@+id/product_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/product_name"
+            android:layout_below="@+id/product_home_name"
             android:scaleType="centerCrop"
             android:layout_marginTop="20dp"></ImageView>
         <TextView
@@ -39,7 +39,7 @@
             android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/product_description"
+            android:layout_below="@+id/product_description"
             android:text="Product price"
             android:textAlignment="center"
             android:textSize="16sp"

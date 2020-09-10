@@ -61,9 +61,9 @@ public class HomeFragment extends Fragment {
                 FirebaseRecyclerAdapter<Products, ProductVeiwHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ProductVeiwHolder productVeiwHolder, int i, @NonNull Products products) {
-                        productVeiwHolder.productName.setText(products.getPname());
-                        productVeiwHolder.productDescription.setText(products.getPname());
-                        productVeiwHolder.productPrice.setText("Price = " + products.getPname() + "$");
+                        productVeiwHolder.productName.setText(products.getName());
+                        productVeiwHolder.productDescription.setText(products.getDescription());
+                        productVeiwHolder.productPrice.setText("Price = " + products.getPrice() + "$");
                         Picasso.get().load(products.getImage()).into(productVeiwHolder.imageView);
                     }
 
