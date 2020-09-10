@@ -21,7 +21,7 @@
         android:padding="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:hint="phone number"
+        android:hint="Email"
         android:inputType="number"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColor="@color/colorPrimaryDark"

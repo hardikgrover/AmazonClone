@@ -16,41 +16,26 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/register_user_name_input"
+        android:id="@+id/register_user_email_input"
         android:layout_below="@+id/register_app_logo"
         android:background="@drawable/input_design"
         android:padding="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:hint="name"
+        android:hint="Email"
         
         android:textColorHint="@color/colorPrimaryDark"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
         android:textStyle="bold"></EditText>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/register_phone_number_input"
-        android:layout_below="@+id/register_user_name_input"
-        android:background="@drawable/input_design"
-        android:padding="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:hint="phone number"
-        android:inputType="number"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="17sp"
-        android:textStyle="bold"></EditText>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/register_phone_password_input"
-        android:layout_below="@+id/register_phone_number_input"
+        android:layout_below="@+id/register_user_email_input"
         android:background="@drawable/input_design"
         android:padding="20dp"
         android:layout_marginTop="5dp"

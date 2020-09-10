@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +27,12 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button createAccountButton;
-    private EditText InputName,InputPhoneNumber,InputPassword;
+    private EditText inputEmail,inputPassword;
     private ProgressDialog loadingBar;
+    private FirebaseAuth mAuth;
+    private DatabaseReference rootRef;
+    //String currentUserId;
+
 
 
     @Override
@@ -35,11 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         createAccountButton = findViewById(R.id.register_button);
-        InputName = findViewById(R.id.register_user_name_input);
-        InputPhoneNumber = findViewById(R.id.register_phone_number_input);
-        InputPassword = findViewById(R.id.register_phone_password_input);
+        inputEmail = findViewById(R.id.register_user_email_input);
+        inputPassword = findViewById(R.id.register_phone_password_input);
         loadingBar = new ProgressDialog(this);
-
+        mAuth = FirebaseAuth.getInstance();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,33 +56,57 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        String name = InputName.getText().toString();
-        String password = InputPassword.getText().toString();
-        String phone = InputPhoneNumber.getText().toString();
+        String email = inputEmail.getText().toString();
+        String password = inputPassword.getText().toString();
 
-        if (TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(email)){
             Toast.makeText(this, "please enter your name", Toast.LENGTH_SHORT).show();
         }
         else  if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "please enter password", Toast.LENGTH_SHORT).show();
         }
-        else  if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "please enter your phone number", Toast.LENGTH_SHORT).show();
-        }
+
         else{
             loadingBar.setTitle("Create Account");
             loadingBar.setMessage("Please wait while checking the crediantials");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
+            mAuth.createUserWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                String currentUserId = mAuth.getCurrentUser().getUid();
+                                // rootRef.child("users").child(currentUserId).child("device_token")
+                                //       .setValue(deviceToken);
 
-            validatePhoneNumber(name,phone,password);
+
+
+                                rootRef.child("users").child(currentUserId).setValue("");
+                                SendUserToHomeActivity();
+                                Toast.makeText(RegisterActivity.this,"user created",Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+
+                            }
+                            else {
+                                String message = task.getException().toString();
+                                Toast.makeText(RegisterActivity.this,"error : "+message ,Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+                            }
+                        }
+                    });
+
+
 
         }
     }
 
+    private void SendUserToHomeActivity() {
+        Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
+        startActivity(intent);
+    }
+
     private void validatePhoneNumber(final String name, final String phone, final String password) {
-        final DatabaseReference rootRef;
-        rootRef = FirebaseDatabase.getInstance().getReference();
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
