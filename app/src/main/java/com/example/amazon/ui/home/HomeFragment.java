@@ -1,5 +1,6 @@
 package com.example.amazon.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.amazon.Model.Products;
+import com.example.amazon.ProductDetails;
 import com.example.amazon.R;
 import com.example.amazon.ViewHolder.ProductVeiwHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -60,11 +62,20 @@ public class HomeFragment extends Fragment {
         FirebaseRecyclerAdapter<Products, ProductVeiwHolder> adapter = new
                 FirebaseRecyclerAdapter<Products, ProductVeiwHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull ProductVeiwHolder productVeiwHolder, int i, @NonNull Products products) {
+                    protected void onBindViewHolder(@NonNull ProductVeiwHolder productVeiwHolder, int i, @NonNull final Products products) {
                         productVeiwHolder.productName.setText(products.getName());
                         productVeiwHolder.productDescription.setText(products.getDescription());
                         productVeiwHolder.productPrice.setText("Price = " + products.getPrice() + "$");
                         Picasso.get().load(products.getImage()).into(productVeiwHolder.imageView);
+
+                        productVeiwHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getContext(), ProductDetails.class);
+                                intent.putExtra("pid",products.getPid());
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     @NonNull

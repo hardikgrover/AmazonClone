@@ -6,38 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".ProductDetails">
     <ImageView
-        android:id="@+id/product_image_des"
+        android:id="@+id/product_image_details1"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:scaleType="centerCrop"></ImageView>
     <TextView
-        android:id="@+id/product_name_description"
+        android:id="@+id/product_name_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="product name"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_below="@+id/product_image_des"
+        android:layout_below="@+id/product_image_details1"
         android:gravity="center"
         android:layout_marginTop="10dp"></TextView>
         <TextView
-            android:id="@+id/product_description_description"
+            android:id="@+id/product_description_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="product description"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_below="@+id/product_name_description"
+            android:layout_below="@+id/product_name_details"
             android:gravity="center"
             android:layout_marginTop="10dp"></TextView>
     <TextView
-        android:id="@+id/product_price_description"
+        android:id="@+id/product_price_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="product price"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_below="@+id/product_description_description"
+        android:layout_below="@+id/product_description_details"
         android:gravity="center"
         android:layout_marginTop="10dp"></TextView>
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
@@ -49,7 +49,7 @@
         app:finalNumber="10"
         app:textSize="16dp"
         android:gravity="center"
-        android:layout_below="@+id/product_price_description"
+        android:layout_below="@+id/product_price_details"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
 
@@ -58,17 +58,18 @@
 
 
     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
-    <com.rey.material.widget.FloatingActionButton
-        android:id="@+id/add_product_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:backgroundTint="@android:color/white"
-        app:fab_iconSrc="@drawable/nav_cart"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="15dp"></com.rey.material.widget.FloatingActionButton>
 
+<Button
+    android:id="@+id/pd_add_to_cart_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:layout_margin="15dp"
+    android:layout_alignParentBottom="true"
+    android:text="Add to cart"
+    android:textColor="@android:color/white"
+    android:textStyle="bold"
+    android:textSize="18sp"></Button>
 
 </RelativeLayout>
 
