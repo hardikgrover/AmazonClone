@@ -80,13 +80,13 @@ public class ProductDetails extends AppCompatActivity {
         saveCurrentTime = currentTime.format(callForDate.getTime());
 
         final HashMap<String,Object> cartMap = new HashMap<>();
-        cartMap.put("product id",productId);
-        cartMap.put("product name",productName.getText().toString());
-        cartMap.put("product price",productPrice.getText().toString());
-        cartMap.put("product date",saveCurrentDate);
-        cartMap.put("product time",saveCurrentTime);
-        cartMap.put("product quantity",numberButton.getNumber());
-        cartMap.put("product discount","");
+        cartMap.put("productId",productId);
+        cartMap.put("productName",productName.getText().toString());
+        cartMap.put("productPrice",productPrice.getText().toString());
+        cartMap.put("productDate",saveCurrentDate);
+        cartMap.put("productTime",saveCurrentTime);
+        cartMap.put("productQuantity",numberButton.getNumber());
+        cartMap.put("productDiscount","");
 
         cartListRef.child("user View").child(currentUserId).child("Products").child(productId)
                 .updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
