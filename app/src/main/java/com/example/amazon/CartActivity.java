@@ -22,8 +22,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -36,6 +39,8 @@ public class CartActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUser;
     private int totalCartAmount;
+    private String productId;
+    private TextView msg1;
 
 
     @Override
@@ -60,6 +65,7 @@ public class CartActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(CartActivity.this,ConfirmFinalOrder.class);
                 intent.putExtra("cart price",String.valueOf(totalCartAmount));
+                intent.putExtra("pid",productId);
                 startActivity(intent);
                 finish();
             }
@@ -77,6 +83,7 @@ public class CartActivity extends AppCompatActivity {
                 FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder cartViewHolder, int i, @NonNull final Cart cart) {
+                productId = cart.getProductId();
                 cartViewHolder.name.setText(cart.getProductName());
                 cartViewHolder.price.setText(cart.getProductPrice());
                 cartViewHolder.quantity.setText(cart.getProductQuantity());
@@ -158,6 +165,42 @@ public class CartActivity extends AppCompatActivity {
             price = itemView.findViewById(R.id.cart_price);
             quantity = itemView.findViewById(R.id.cart_quantity);
         }
+    }
+    private void checkOrderStat(String productId)
+
+    {
+        DatabaseReference ordersRef;
+        ordersRef  = FirebaseDatabase.getInstance().getReference().child("Orders").child(productId);
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String shippingState = dataSnapshot.child("state").getValue().toString();
+                    String userName = dataSnapshot.child("name").getValue().toString();
+                    if (shippingState.equals("shipped")){
+                        totalAmount.setText("Your order has been placed successfully");
+                        msg1.setText("Congractlations! Your final order has been placed successfully Soon you will recieve your order at your address.");
+                        recyclerView.setVisibility(View.GONE);
+                        msg1.setVisibility(View.VISIBLE);
+                        nextBtn.setVisibility(View.GONE);
+                        Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(shippingState.equals("not shipped"));
+                    totalAmount.setText("Not shipped");
+                    recyclerView.setVisibility(View.GONE);
+                    msg1.setVisibility(View.VISIBLE);
+                    nextBtn.setVisibility(View.GONE);
+                    Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
 

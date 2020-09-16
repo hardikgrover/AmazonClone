@@ -35,6 +35,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_final_order);
+        pid = getIntent().getStringExtra("pid");
         cartPrice = getIntent().getStringExtra( "cart price");
         confirmBtn = findViewById(R.id.confirm_final_order_btn);
         name = findViewById(R.id.shipment_name);
@@ -45,7 +46,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         cartRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUid = mAuth.getCurrentUser().getUid();
-        pid = cartRef.child("Cart List").child("user View").child(currentUid).child("Products").getKey().toString();
+//        pid = cartRef.child("Cart List").child("user View").child(currentUid).child("Products").getKey().toString();
 
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +88,6 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         SimpleDateFormat getDate = new SimpleDateFormat("hh:mm:ss a");
         date = getDate.format(calendar.getTime());
 
-        productId = orderRef.push().getKey();
 
         HashMap<String,Object> finalOrder = new HashMap<>();
         finalOrder.put("date",date);
@@ -99,12 +99,12 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         finalOrder.put("state","not shipped");
         finalOrder.put("uid",currentUid);
         finalOrder.put("totalAmount",cartPrice);
-        finalOrder.put("productId",productId);
+        finalOrder.put("productId",pid);
 
-        orderRef.child(productId).updateChildren(finalOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
+        orderRef.child(pid).updateChildren(finalOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                cartRef.child("Cart List").child("user view").child(currentUid).child(pid).removeValue()
+                cartRef.child("Cart List").child("user View").child(currentUid).child("Products").child(pid).removeValue()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
