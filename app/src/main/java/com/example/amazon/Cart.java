@@ -25,13 +25,26 @@ public class Cart {
         this.productQuantity = productQuantity;
     }
 
-    public Cart(String productName, String productPrice, String productQuantity) {
+    public Cart(String productName, String productPrice, String productQuantity,String productId) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
+        this.productId = productId;
     }
 
-    private String productName,productPrice,productQuantity;
+    private String productName;
+    private String productPrice;
+    private String productQuantity;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    private String productId;
     public Cart(){
 
 

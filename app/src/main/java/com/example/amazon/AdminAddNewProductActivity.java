@@ -41,6 +41,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private StorageReference ProductImagesRef;
     private DatabaseReference productRef;
     private ProgressDialog loadingBar;
+    private String productId;
+
 
 
     @Override
@@ -108,6 +110,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         productRandomKey = saveCurrentDate+saveCurrentTime;
+        productId = productRef.push().getKey();
 
         final StorageReference filePath =  ProductImagesRef.child(ImageUri.getLastPathSegment()+productRandomKey+".jpg");
 
@@ -158,7 +161,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
     private void saveProductInfoToDatabase() {
         HashMap<String,Object> productMap = new HashMap<>();
-        productMap.put("pid",productRandomKey);
+        productMap.put("pid",productId);
         productMap.put("date",saveCurrentDate);
         productMap.put("time",saveCurrentTime);
         productMap.put("description",description);
@@ -167,7 +170,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         productMap.put("price",price);
         productMap.put("name",productName);
 
-        productRef.child(productRandomKey).updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        productRef.child(productId).updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
            if (task.isSuccessful()){
