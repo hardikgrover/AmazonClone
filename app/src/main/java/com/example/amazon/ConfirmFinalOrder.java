@@ -36,6 +36,7 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_final_order);
         pid = getIntent().getStringExtra("pid");
+        Toast.makeText(this, pid, Toast.LENGTH_LONG).show();
         cartPrice = getIntent().getStringExtra( "cart price");
         confirmBtn = findViewById(R.id.confirm_final_order_btn);
         name = findViewById(R.id.shipment_name);

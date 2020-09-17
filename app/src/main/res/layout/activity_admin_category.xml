@@ -108,6 +108,57 @@
             android:src="@drawable/mobiles"
             ></ImageView>
     </LinearLayout>
+    <Button
+        android:id="@+id/check_new_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="Logout"
+        android:layout_above="@+id/admin_logout_button"
+        android:textAlignment="center"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp"
+        ></Button>
+    <Button
+        android:id="@+id/admin_logout_button"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Check New Orders"
+        android:textAlignment="center"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:textColor="@android:color/white"
+        ></Button>
+
+
 
 
 </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

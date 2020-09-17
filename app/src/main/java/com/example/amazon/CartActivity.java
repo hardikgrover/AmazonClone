@@ -39,7 +39,9 @@ public class CartActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUser;
     private int totalCartAmount;
-    private String productId;
+    private String productId = "";
+    private DatabaseReference orderRef;
+
     private TextView msg1;
 
 
@@ -58,16 +60,57 @@ public class CartActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.next_button);
         totalAmount = findViewById(R.id.total_price);
+        msg1 = findViewById(R.id.msg_1);
+
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                orderRef  = FirebaseDatabase.getInstance().getReference().child("Orders").child(productId);
 
-                Intent intent = new Intent(CartActivity.this,ConfirmFinalOrder.class);
-                intent.putExtra("cart price",String.valueOf(totalCartAmount));
-                intent.putExtra("pid",productId);
-                startActivity(intent);
-                finish();
+                orderRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            String shippingState = dataSnapshot.child("state").getValue().toString();
+                            String userName = dataSnapshot.child("name").getValue().toString();
+                            if (shippingState.equals("shipped")){
+
+                                totalAmount.setText("Your order has been placed successfully");
+                                msg1.setText("Congractlations! Your final order has been placed successfully Soon you will recieve your order at your address.");
+                                recyclerView.setVisibility(View.GONE);
+                                msg1.setVisibility(View.VISIBLE);
+                                nextBtn.setVisibility(View.GONE);
+                            }
+                            else if(shippingState.equals("not shipped")) {
+                                Toast.makeText(CartActivity.this, "no", Toast.LENGTH_SHORT).show();
+
+                            totalAmount.setText("Not shipped");
+                            recyclerView.setVisibility(View.GONE);
+                            msg1.setVisibility(View.VISIBLE);
+                            nextBtn.setVisibility(View.GONE);
+                            Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                        else{
+
+                            Intent intent = new Intent(CartActivity.this,ConfirmFinalOrder.class);
+                            intent.putExtra("cart price",String.valueOf(totalCartAmount));
+                            intent.putExtra("pid",productId);
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
 
@@ -165,42 +208,12 @@ public class CartActivity extends AppCompatActivity {
             price = itemView.findViewById(R.id.cart_price);
             quantity = itemView.findViewById(R.id.cart_quantity);
         }
+
     }
-    private void checkOrderStat(String productId)
+    private void checkOrderStat()
 
     {
-        DatabaseReference ordersRef;
-        ordersRef  = FirebaseDatabase.getInstance().getReference().child("Orders").child(productId);
-        ordersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    String shippingState = dataSnapshot.child("state").getValue().toString();
-                    String userName = dataSnapshot.child("name").getValue().toString();
-                    if (shippingState.equals("shipped")){
-                        totalAmount.setText("Your order has been placed successfully");
-                        msg1.setText("Congractlations! Your final order has been placed successfully Soon you will recieve your order at your address.");
-                        recyclerView.setVisibility(View.GONE);
-                        msg1.setVisibility(View.VISIBLE);
-                        nextBtn.setVisibility(View.GONE);
-                        Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(shippingState.equals("not shipped"));
-                    totalAmount.setText("Not shipped");
-                    recyclerView.setVisibility(View.GONE);
-                    msg1.setVisibility(View.VISIBLE);
-                    nextBtn.setVisibility(View.GONE);
-                    Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
 
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }
 
