@@ -100,9 +100,9 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         finalOrder.put("state","not shipped");
         finalOrder.put("uid",currentUid);
         finalOrder.put("totalAmount",cartPrice);
-        finalOrder.put("productId",pid);
+//        finalOrder.put("productId",pid);
 
-        orderRef.child(pid).updateChildren(finalOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
+        orderRef.child(currentUid).updateChildren(finalOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 cartRef.child("Cart List").child("user View").child(currentUid).child("Products").child(pid).removeValue()

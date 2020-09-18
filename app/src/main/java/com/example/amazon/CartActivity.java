@@ -42,6 +42,7 @@ public class CartActivity extends AppCompatActivity {
     private String productId = "";
     private DatabaseReference orderRef;
 
+
     private TextView msg1;
 
 
@@ -66,14 +67,17 @@ public class CartActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                orderRef  = FirebaseDatabase.getInstance().getReference().child("Orders").child(productId);
+//                Toast.makeText(CartActivity.this, productId, Toast.LENGTH_SHORT).show();
+                orderRef  = FirebaseDatabase.getInstance().getReference().child("Orders").child(currentUser);
 
                 orderRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()){
+                            Toast.makeText(CartActivity.this, "yes", Toast.LENGTH_SHORT).show();
+
                             String shippingState = dataSnapshot.child("state").getValue().toString();
-                            String userName = dataSnapshot.child("name").getValue().toString();
+
                             if (shippingState.equals("shipped")){
 
                                 totalAmount.setText("Your order has been placed successfully");
@@ -83,17 +87,18 @@ public class CartActivity extends AppCompatActivity {
                                 nextBtn.setVisibility(View.GONE);
                             }
                             else if(shippingState.equals("not shipped")) {
-                                Toast.makeText(CartActivity.this, "no", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(CartActivity.this, "no", Toast.LENGTH_SHORT).show();
 
                             totalAmount.setText("Not shipped");
                             recyclerView.setVisibility(View.GONE);
                             msg1.setVisibility(View.VISIBLE);
                             nextBtn.setVisibility(View.GONE);
-                            Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(CartActivity.this, "You can purchase more products once you recieved your first order", Toast.LENGTH_SHORT).show();
                             }
 
                         }
                         else{
+                            Toast.makeText(CartActivity.this, "no", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(CartActivity.this,ConfirmFinalOrder.class);
                             intent.putExtra("cart price",String.valueOf(totalCartAmount));
