@@ -1,4 +1,4 @@
-package com.example.amazon;
+package com.example.amazon.Model;
 
 public class Cart {
     public String getProductName() {
