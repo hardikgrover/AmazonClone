@@ -48,7 +48,7 @@ public class AdminNewOrders extends AppCompatActivity {
                         orderViewHolder.name.setText(finalOrder.getName());
                         orderViewHolder.phone.setText(finalOrder.getPhoneNumber());
                         orderViewHolder.adderss.setText(finalOrder.getAddress());
-                        orderViewHolder.price.setText(finalOrder.getPrice());
+                        orderViewHolder.price.setText(finalOrder.getTotalAmount());
                         orderViewHolder.dateTime.setText(finalOrder.getDate());
 
                     }

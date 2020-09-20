@@ -17,12 +17,12 @@ public class FinalOrder {
         this.address = address;
     }
 
-    public String getPrice() {
-        return price;
+    public String getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getPhoneNumber() {
@@ -44,13 +44,13 @@ public class FinalOrder {
     public FinalOrder() {
     }
 
-    public FinalOrder(String name, String address, String price, String phoneNumber, String date) {
+    public FinalOrder(String name, String address, String totalAmount, String phoneNumber, String date) {
         this.name = name;
         this.address = address;
-        this.price = price;
+        this.totalAmount = totalAmount;
         this.phoneNumber = phoneNumber;
         this.date = date;
     }
 
-    private String name,address,price,phoneNumber,date;
+    private String name,address,totalAmount,phoneNumber,date;
 }
