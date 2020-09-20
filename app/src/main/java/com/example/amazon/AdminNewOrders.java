@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amazon.Model.Cart;
 import com.example.amazon.Model.FinalOrder;
@@ -43,13 +45,24 @@ public class AdminNewOrders extends AppCompatActivity {
         FirebaseRecyclerAdapter<FinalOrder,AdminNewOrders.OrderViewHolder>adapter =new
                 FirebaseRecyclerAdapter<FinalOrder, OrderViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull OrderViewHolder orderViewHolder, int i, @NonNull FinalOrder finalOrder) {
+                    protected void onBindViewHolder(@NonNull final OrderViewHolder orderViewHolder, int i, @NonNull final FinalOrder finalOrder) {
+                        final String key = getRef(i).getKey();
                         final String name,phone,adderess,dateTime,Price;
                         orderViewHolder.name.setText(finalOrder.getName());
                         orderViewHolder.phone.setText(finalOrder.getPhoneNumber());
                         orderViewHolder.adderss.setText(finalOrder.getAddress());
                         orderViewHolder.price.setText(finalOrder.getTotalAmount());
                         orderViewHolder.dateTime.setText(finalOrder.getDate());
+
+                        orderViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+//                                Toast.makeText(AdminNewOrders.this, key, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AdminNewOrders.this,AdminUserProducts.class);
+                                intent.putExtra("uid",key);
+                                startActivity(intent);
+                            }
+                        });
 
                     }
 

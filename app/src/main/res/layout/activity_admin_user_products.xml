@@ -23,7 +23,7 @@
         android:id="@+id/r4"
         android:layout_below="@+id/admin_products"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="6dp"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

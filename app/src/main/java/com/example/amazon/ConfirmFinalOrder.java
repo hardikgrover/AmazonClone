@@ -23,10 +23,11 @@ import java.util.HashMap;
 
 public class ConfirmFinalOrder extends AppCompatActivity {
     private EditText name,phone,address,city;
-    private DatabaseReference orderRef,cartRef;
+    private DatabaseReference orderRef,cartRef,userRef;
     private FirebaseAuth mAuth;
     private String currentUid;
     private String pid;
+
 
 
     private Button confirmBtn;
@@ -47,6 +48,8 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         cartRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUid = mAuth.getCurrentUser().getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUid);
+
 //        pid = cartRef.child("Cart List").child("user View").child(currentUid).child("Products").getKey().toString();
 
 
@@ -100,6 +103,17 @@ public class ConfirmFinalOrder extends AppCompatActivity {
         finalOrder.put("state","not shipped");
         finalOrder.put("uid",currentUid);
         finalOrder.put("totalAmount",cartPrice);
+
+        HashMap<String,Object> user = new HashMap<>();
+        user.put("name",name.getText().toString());
+        user.put("city",city.getText().toString());
+        user.put("address",address.getText().toString());
+        user.put("phoneNumber",phone.getText().toString());
+        userRef.updateChildren(user);
+
+
+
+
 //        finalOrder.put("productId",pid);
 
         orderRef.child(currentUid).updateChildren(finalOrder).addOnCompleteListener(new OnCompleteListener<Void>() {

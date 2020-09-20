@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amazon.Model.Cart;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -24,13 +26,16 @@ public class AdminUserProducts extends AppCompatActivity {
     private DatabaseReference mRef;
     private FirebaseAuth mAuth;
     private String currentUserId;
+    private String uid;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_user_products);
-        mRef = FirebaseDatabase.getInstance().getReference().child("admin View").child(currentUserId).child("Products");
+        uid = getIntent().getStringExtra("uid");
+
+        mRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("admin View").child(uid).child("Products");
         recyclerView = findViewById(R.id.r4);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -38,11 +43,14 @@ public class AdminUserProducts extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Toast.makeText(AdminUserProducts.this, uid, Toast.LENGTH_SHORT).show();
+
         FirebaseRecyclerOptions<Cart>options = new FirebaseRecyclerOptions.Builder<Cart>()
                 .setQuery(mRef,Cart.class).build();
 

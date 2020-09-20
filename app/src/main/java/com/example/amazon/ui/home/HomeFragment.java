@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,16 +22,26 @@ import com.example.amazon.R;
 import com.example.amazon.ViewHolder.ProductVeiwHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
     private HomeViewModel homeViewModel;
-    private DatabaseReference productRef;
+    private DatabaseReference productRef,userRef;
+    private FirebaseAuth mAuth;
+    private String currentUser;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,6 +54,12 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         productRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser().getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser);
+
+        
+        addUserInformation();
 
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
@@ -52,9 +69,19 @@ public class HomeFragment extends Fragment {
 //        });
         return root;
     }
+
+    private void addUserInformation() {
+        HashMap<String,Object> user= new HashMap<>();
+        user.put("uid",currentUser);
+        userRef.updateChildren(user);
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+        
+       
         FirebaseRecyclerOptions<Products> options =
                 new FirebaseRecyclerOptions.Builder<Products>()
                         .setQuery(productRef,Products.class)

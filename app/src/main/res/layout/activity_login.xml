@@ -22,7 +22,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:hint="Email"
-        android:inputType="number"
+        android:inputType="text"
         android:textColorHint="@color/colorPrimaryDark"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
