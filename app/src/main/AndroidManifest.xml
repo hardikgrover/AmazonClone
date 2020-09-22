@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminUserProducts"></activity>
-        <activity android:name=".AdminNewOrders" />
+        <activity android:name=".forgotPassword"></activity>
+        <activity android:name=".Admin.AdminUserProducts" />
+        <activity android:name=".Admin.AdminNewOrders" />
         <activity android:name=".ConfirmFinalOrder" />
         <activity android:name=".CartActivity" />
         <activity android:name=".ProductDetails" />
@@ -37,8 +38,8 @@
             android:name=".CodeMail"
             android:label="@string/title_activity_code_mail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AdminCategoryActivity" />
-        <activity android:name=".AdminAddNewProductActivity" />
+        <activity android:name=".Admin.AdminCategoryActivity" />
+        <activity android:name=".Admin.AdminAddNewProductActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".loginActivity" />
         <activity android:name=".MainActivity">

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminCategoryActivity">
+    tools:context=".Admin.AdminCategoryActivity">
     <TextView
         android:id="@+id/slogan_category"
         android:layout_width="match_parent"
@@ -109,11 +109,26 @@
             ></ImageView>
     </LinearLayout>
     <Button
+        android:id="@+id/manage_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="Manage products"
+        android:layout_above="@+id/check_new_orders"
+        android:textAlignment="center"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp"
+        ></Button>
+    <Button
         android:id="@+id/check_new_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:text="Logout"
+        android:text="Check new orders"
         android:layout_above="@+id/admin_logout_button"
         android:textAlignment="center"
         android:textSize="26dp"
@@ -133,7 +148,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Check New Orders"
+        android:text="Logout"
         android:textAlignment="center"
         android:textSize="26dp"
         android:textStyle="bold"

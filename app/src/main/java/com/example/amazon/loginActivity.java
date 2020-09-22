@@ -14,8 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.amazon.Model.users;
-import com.example.amazon.Prevalent.Prevalent;
+import com.example.amazon.Admin.AdminCategoryActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,6 +35,7 @@ public class loginActivity extends AppCompatActivity {
     private CheckBox checkBoxRememberMe;
     private TextView adminLink , notAdminLink;
     private FirebaseAuth mAuth;
+//    private TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,15 @@ public class loginActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.login_phone_number_input);
         inputPassword = findViewById(R.id.login_phone_password_input);
         adminLink = findViewById(R.id.admin_panel1_link);
-        notAdminLink = findViewById(R.id.not_admin_panel1_link);
         loadingBar = new ProgressDialog(this);
+//        forgotPassword = findViewById(R.id.forget_password_link);
+//        forgotPassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(loginActivity.this,forgotPassword.class);
+//                startActivity(intent);
+//            }
+//        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +109,7 @@ public class loginActivity extends AppCompatActivity {
                                startActivity(intent);
                    }
                    else if (parentDbName.equals("admins")){
-                       Intent intent = new Intent(loginActivity.this,AdminCategoryActivity.class);
+                       Intent intent = new Intent(loginActivity.this, AdminCategoryActivity.class);
                               startActivity(intent);
                    }
 

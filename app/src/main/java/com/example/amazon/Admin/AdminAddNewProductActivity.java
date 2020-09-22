@@ -1,4 +1,4 @@
-package com.example.amazon;
+package com.example.amazon.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.amazon.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -174,7 +175,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
            if (task.isSuccessful()){
-               Intent intent = new Intent(AdminAddNewProductActivity.this,AdminCategoryActivity.class);
+               Intent intent = new Intent(AdminAddNewProductActivity.this, AdminCategoryActivity.class);
                startActivity(intent);
                loadingBar.dismiss();
                Toast.makeText(AdminAddNewProductActivity.this, "Product is added successfully!", Toast.LENGTH_SHORT).show();

@@ -1,20 +1,22 @@
-package com.example.amazon;
+package com.example.amazon.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.amazon.Model.Cart;
 import com.example.amazon.Model.FinalOrder;
+import com.example.amazon.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -54,13 +56,39 @@ public class AdminNewOrders extends AppCompatActivity {
                         orderViewHolder.price.setText(finalOrder.getTotalAmount());
                         orderViewHolder.dateTime.setText(finalOrder.getDate());
 
-                        orderViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        orderViewHolder.button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 //                                Toast.makeText(AdminNewOrders.this, key, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(AdminNewOrders.this,AdminUserProducts.class);
                                 intent.putExtra("uid",key);
                                 startActivity(intent);
+                            }
+                        });
+                        orderViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                CharSequence options[] = new CharSequence[]{
+                                        "yes",
+                                        "no"
+                                };
+                                AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrders.this);
+                                builder.setTitle("Have you shipped the products");
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (i ==0){
+                                            String uid = getRef(i).getKey();
+                                            removeOrder(uid);
+                                        }
+                                        else {
+                                            finish();
+                                        }
+                                    }
+
+
+                                });
+                                builder.show();
                             }
                         });
 
@@ -80,8 +108,14 @@ public class AdminNewOrders extends AppCompatActivity {
 
 
     }
+
+    private void removeOrder(String uid) {
+        finalOrderRef.child(uid).removeValue();
+    }
+
     public static  class OrderViewHolder extends RecyclerView.ViewHolder{
         private TextView name,adderss,phone,price,dateTime;
+        private Button button;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +124,7 @@ public class AdminNewOrders extends AppCompatActivity {
             price = itemView.findViewById(R.id.final_user_price);
             dateTime = itemView.findViewById(R.id.final_user_date);
             phone = itemView.findViewById(R.id.final_user_phone);
+            button = itemView.findViewById(R.id.final_user_button);
 
 
         }
