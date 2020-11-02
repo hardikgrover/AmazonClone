@@ -24,6 +24,8 @@ public class forgotPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        auth = FirebaseAuth.getInstance();
+
 
         getLink = findViewById(R.id.get_link);
         email = findViewById(R.id.email);
@@ -33,21 +35,22 @@ public class forgotPassword extends AppCompatActivity {
             public void onClick(View view) {
 
 
+
                 verify();
             }
         });
     }
 
     private void verify( ) {
-        String email = this.email.getText().toString().trim();
+        String Email = email.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(Email)) {
             Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
-        auth.sendPasswordResetEmail(email)
+        auth.sendPasswordResetEmail(Email)
 
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.amazon.Interface.ItemClickListner;
 import com.example.amazon.R;
 
-public class ProductVeiwHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class  ProductVeiwHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView productName , productDescription,productPrice;
     public ImageView imageView;
     public ItemClickListner listner;

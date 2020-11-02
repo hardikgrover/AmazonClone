@@ -35,7 +35,7 @@ public class loginActivity extends AppCompatActivity {
     private CheckBox checkBoxRememberMe;
     private TextView adminLink , notAdminLink;
     private FirebaseAuth mAuth;
-//    private TextView forgotPassword;
+    private TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +46,15 @@ public class loginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.login_phone_password_input);
         adminLink = findViewById(R.id.admin_panel1_link);
         loadingBar = new ProgressDialog(this);
-//        forgotPassword = findViewById(R.id.forget_password_link);
-//        forgotPassword.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(loginActivity.this,forgotPassword.class);
-//                startActivity(intent);
-//            }
-//        });
+        forgotPassword = findViewById(R.id.forget_password_link);
+        notAdminLink = findViewById(R.id.not_admin_panel1_link);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(loginActivity.this,forgotPassword.class);
+                startActivity(intent);
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
